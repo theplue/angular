@@ -3,7 +3,6 @@ package com.example.angular.controllers;
 import com.example.angular.models.Contact;
 import com.example.angular.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -6,12 +6,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "contacts")
 public class Contact {
     @Id
-    String id;
-    String name;
-    String address;
-    String city;
-    String phone;
-    String email;
+    private String id;
+    private String name;
+    private String address;
+    private String city;
+    private String phone;
+    private String email;
 
     public Contact() {
     }
