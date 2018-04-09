@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -20,16 +21,17 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact createContact(Contact contact) {
+        if( contact.getId().isEmpty()){
+            contact.setId(String.valueOf(ThreadLocalRandom.current().nextInt()));
+            System.out.println(contact.getId());
+        }
         return contactRepository.save(contact);
     }
 
     @Override
     public Contact getContact(String id) {
         Optional<Contact> c = contactRepository.findById(id);
-        if( c.isPresent()){
-            return c.get();
-        }
-        return new Contact();
+        return c.orElseGet(Contact::new);
     }
 
     @Override
@@ -50,12 +52,9 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public String deleteContact(String id) {
-        Contact contact = contactRepository.findById(id).get();
-        contactRepository.delete(contact);
-
-        return "deleted";
-
+    public void deleteContact(String id) {
+        Optional<Contact> contact = contactRepository.findById(id);
+        contact.ifPresent(contact1 -> contactRepository.delete(contact1));
     }
 
 

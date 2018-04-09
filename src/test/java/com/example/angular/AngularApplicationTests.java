@@ -1,26 +1,22 @@
 package com.example.angular;
 
-import com.example.angular.controllers.ContactController;
-import com.example.angular.models.Contact;
-import com.example.angular.repositories.ContactRepository;
-import com.example.angular.services.ContactService;
-import org.junit.Before;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.hamcrest.Matchers.containsString;
+import java.nio.charset.Charset;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,27 +26,44 @@ public class AngularApplicationTests {
 
     @Autowired
     private MockMvc mockMvc;
-    private Contact testContact = new Contact("1", "Robert Slavik", "1234 Bellview rd", "Denver", "867-5309", "email@email.com");
-
-    @Autowired
-    private ContactRepository contactRepository;
-
-    @Before
-    public void deleteAllBeforeTests() throws Exception {
-        contactRepository.deleteAll();
-
-    }
+    private String testContact = "{\"id\":\"12377\",\"name\":\"Robert Slavik\",\"address\":\"1234 Bellview Ln\",\"city\":\"Denver\",\"phone\":\"8675309\",\"email\":\"robert.slavik@dummy.com\"}";
+    private String nullContact = "{\"id\":null,\"name\":null,\"address\":null,\"city\":null,\"phone\":null,\"email\":null}";
 
     @Test
     public void shouldBeEmptyList() throws Exception {
-        mockMvc.perform(get("/contacts")).andExpect(status().isOk());
+        mockMvc.perform(get("/contacts"))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void shouldCreateEntity() throws Exception {
-        mockMvc.perform(post("/contacts").content(
-                "{\"id\":\"123\",\"name\":\"Robert Slavik\",\"address\":\"1234 Bellview Ln\",\"city\":\"Denver\",\"phone\":\"8675309\",\"email\":\"robert.slavik@dummy.com\"}")).andExpect(
-                status().isCreated()).andExpect( status().isCreated());
+        mockMvc.perform(post("/contacts")
+                .contentType(new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8")))
+                .content(testContact))
+                .andExpect(status().isCreated())
+                .andExpect( status().isCreated());
+    }
+
+    @Test
+    public void getContact() throws Exception {
+        shouldCreateEntity();
+        MvcResult result = this.mockMvc.perform(get("/contacts/12377")
+                .accept("application/json"))
+                .andReturn();
+        Assert.assertTrue(result.getResponse().getContentAsString()
+                .equals(testContact));
+    }
+
+    @Test
+    public void deleteContact() throws Exception {
+        shouldCreateEntity();
+        mockMvc.perform(delete("/contacts/12377"))
+                .andExpect(status().isAccepted());
+        MvcResult result = this.mockMvc.perform(get("/contacts/12377")
+                .accept("application/json"))
+                .andReturn();
+        Assert.assertTrue(result.getResponse().getContentAsString()
+                .equals(nullContact));
     }
 
 }
