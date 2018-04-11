@@ -10,6 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GridModule} from "@progress/kendo-angular-grid";
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
+import { CreateContactComponent } from './create-contact/create-contact.component';
 
 const appRoutes: Routes = [
   {
@@ -26,13 +27,19 @@ const appRoutes: Routes = [
     component: ContactDetailComponent,
     data: { title: 'Contact Details' }
   },
+  {
+    path: 'contact-create',
+    component: CreateContactComponent,
+    data: { title: 'Create Contact' }
+  },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     ContactComponent,
-    ContactDetailComponent
+    ContactDetailComponent,
+    CreateContactComponent
   ],
   imports: [
     BrowserModule,

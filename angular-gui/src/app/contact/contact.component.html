@@ -1,6 +1,8 @@
 <div class="container">
   <h1>Contact List</h1>
-
+  <button kendoButton [routerLink]="['/contact-create']">
+    <span class="k-icon k-i-plus"></span>
+  </button>
   <kendo-grid [data]="contacts">
     <kendo-grid-column field="name" title="Name" [width]="200">
       <ng-template kendoGridCellTemplate let-dataItem>

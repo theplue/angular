@@ -88,12 +88,14 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__progress_kendo_angular_grid__ = __webpack_require__("../../../../@progress/kendo-angular-grid/dist/es/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__contact_detail_contact_detail_component__ = __webpack_require__("../../../../../src/app/contact-detail/contact-detail.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__create_contact_create_contact_component__ = __webpack_require__("../../../../../src/app/create-contact/create-contact.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -119,6 +121,11 @@ var appRoutes = [
         component: __WEBPACK_IMPORTED_MODULE_9__contact_detail_contact_detail_component__["a" /* ContactDetailComponent */],
         data: { title: 'Contact Details' }
     },
+    {
+        path: 'contact-create',
+        component: __WEBPACK_IMPORTED_MODULE_10__create_contact_create_contact_component__["a" /* CreateContactComponent */],
+        data: { title: 'Create Contact' }
+    },
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -128,7 +135,8 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_3__contact_contact_component__["a" /* ContactComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__contact_detail_contact_detail_component__["a" /* ContactDetailComponent */]
+                __WEBPACK_IMPORTED_MODULE_9__contact_detail_contact_detail_component__["a" /* ContactDetailComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__create_contact_create_contact_component__["a" /* CreateContactComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -136,7 +144,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_8__progress_kendo_angular_grid__["a" /* GridModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_forms__["c" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* RouterModule */].forRoot(appRoutes)
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["c" /* RouterModule */].forRoot(appRoutes)
             ],
             providers: [],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]]
@@ -252,7 +260,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/contact/contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <h1>Contact List</h1>\n\n  <kendo-grid [data]=\"contacts\">\n    <kendo-grid-column field=\"name\" title=\"Name\" [width]=\"200\">\n      <ng-template kendoGridCellTemplate let-dataItem>\n        <a [routerLink]=\"['/contact-detail', dataItem.id]\">{{dataItem.name}}</a>\n      </ng-template>\n    </kendo-grid-column>\n    <kendo-grid-column field=\"city\" title=\"City\" [width]=\"100\"></kendo-grid-column>\n    <kendo-grid-column field=\"email\" title=\"Email\" [width]=\"200\"></kendo-grid-column>\n  </kendo-grid>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <h1>Contact List</h1>\n  <button kendoButton [routerLink]=\"['/contact-create']\">\n    <span class=\"k-icon k-i-plus\"></span>\n  </button>\n  <kendo-grid [data]=\"contacts\">\n    <kendo-grid-column field=\"name\" title=\"Name\" [width]=\"200\">\n      <ng-template kendoGridCellTemplate let-dataItem>\n        <a [routerLink]=\"['/contact-detail', dataItem.id]\">{{dataItem.name}}</a>\n      </ng-template>\n    </kendo-grid-column>\n    <kendo-grid-column field=\"city\" title=\"City\" [width]=\"100\"></kendo-grid-column>\n    <kendo-grid-column field=\"email\" title=\"Email\" [width]=\"200\"></kendo-grid-column>\n  </kendo-grid>\n</div>\n"
 
 /***/ }),
 
@@ -294,6 +302,90 @@ var ContactComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
     ], ContactComponent);
     return ContactComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/create-contact/create-contact.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/create-contact/create-contact.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <h1>Add New Contact</h1>\n  <div class=\"row\">\n    <div class=\"col-md-6\">\n      <form (ngSubmit)=\"saveContact()\" #contactForm=\"ngForm\">\n        <div class=\"form-group\">\n          <label>Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.name\" name=\"name\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Address</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.address\" name=\"address\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >City</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.city\" name=\"city\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Phone</label>\n          <input type=\"phone\" class=\"form-control\" [(ngModel)]=\"contact.phone\" name=\"phone\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Email</label>\n          <input type=\"email\" class=\"form-control\" [(ngModel)]=\"contact.email\" name=\"email\" required>\n        </div>\n        <div class=\"form-group\">\n          <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!contactForm.form.valid\">Save</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/create-contact/create-contact.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateContactComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CreateContactComponent = /** @class */ (function () {
+    function CreateContactComponent(http, router) {
+        this.http = http;
+        this.router = router;
+        this.contact = {
+            id: "",
+            name: "",
+            address: "",
+            city: "",
+            phone: "",
+            email: ""
+        };
+    }
+    CreateContactComponent.prototype.ngOnInit = function () {
+    };
+    CreateContactComponent.prototype.saveContact = function () {
+        var _this = this;
+        this.http.post('/contacts', this.contact)
+            .subscribe(function (res) {
+            _this.router.navigate(['/contact-detail', res.id]);
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    CreateContactComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-create-contact',
+            template: __webpack_require__("../../../../../src/app/create-contact/create-contact.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/create-contact/create-contact.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
+    ], CreateContactComponent);
+    return CreateContactComponent;
 }());
 
 
