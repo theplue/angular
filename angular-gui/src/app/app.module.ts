@@ -9,6 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GridModule} from "@progress/kendo-angular-grid";
+import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 
 const appRoutes: Routes = [
   {
@@ -19,13 +20,19 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: '/contacts',
     pathMatch: 'full'
-  }
+  },
+  {
+    path: 'contact-detail/:id',
+    component: ContactDetailComponent,
+    data: { title: 'Contact Details' }
+  },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactComponent
+    ContactComponent,
+    ContactDetailComponent
   ],
   imports: [
     BrowserModule,
