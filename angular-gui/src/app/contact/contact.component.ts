@@ -18,7 +18,6 @@ export interface Contact {
 export class ContactComponent implements OnInit {
 
   contacts: any;
-  displayedColumns = ['name', 'city', 'email'];
   constructor(private http: HttpClient) { }
 
   ngOnInit() {

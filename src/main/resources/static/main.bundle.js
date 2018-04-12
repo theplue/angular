@@ -178,7 +178,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/contact-detail/contact-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <h1>{{ contact.name }}</h1>\n  <dl class=\"list\">\n    <dt>Address</dt>\n    <dd>{{ contact.address }}</dd>\n    <dt>City</dt>\n    <dd>{{ contact.city }}</dd>\n    <dt>Phone</dt>\n    <dd>{{ contact.phone }}</dd>\n    <dt>Email</dt>\n    <dd>{{ contact.email }}</dd>\n  </dl>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <h1>{{ contact.name }}</h1>\n  <dl class=\"list\">\n    <dt>Address</dt>\n    <dd>{{ contact.address }}</dd>\n    <dt>City</dt>\n    <dd>{{ contact.city }}</dd>\n    <dt>Phone</dt>\n    <dd>{{ contact.phone }}</dd>\n    <dt>Email</dt>\n    <dd>{{ contact.email }}</dd>\n  </dl>\n  <button class=\"btn btn-primary\" [routerLink]=\"['/contacts']\">Home</button>\n</div>\n"
 
 /***/ }),
 
@@ -260,7 +260,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/contact/contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <h1>Contact List</h1>\n  <button kendoButton [routerLink]=\"['/contact-create']\">\n    <span class=\"k-icon k-i-plus\"></span>\n  </button>\n  <kendo-grid [data]=\"contacts\">\n    <kendo-grid-column field=\"name\" title=\"Name\" [width]=\"200\">\n      <ng-template kendoGridCellTemplate let-dataItem>\n        <a [routerLink]=\"['/contact-detail', dataItem.id]\">{{dataItem.name}}</a>\n      </ng-template>\n    </kendo-grid-column>\n    <kendo-grid-column field=\"city\" title=\"City\" [width]=\"100\"></kendo-grid-column>\n    <kendo-grid-column field=\"email\" title=\"Email\" [width]=\"200\"></kendo-grid-column>\n  </kendo-grid>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <h1><u>Contact List</u></h1>\n  <button class=\"btn btn-primary\" [routerLink]=\"['/contact-create']\">\n    <span class=\"k-icon k-i-plus\"></span>\n    Add new contact\n  </button>\n  <kendo-grid [data]=\"contacts\">\n    <kendo-grid-column field=\"name\" title=\"Name\" [width]=\"200\">\n      <ng-template kendoGridCellTemplate let-dataItem>\n        <a [routerLink]=\"['/contact-detail', dataItem.id]\">{{dataItem.name}}</a>\n      </ng-template>\n    </kendo-grid-column>\n    <kendo-grid-column field=\"city\" title=\"City\" [width]=\"100\"></kendo-grid-column>\n    <kendo-grid-column field=\"email\" title=\"Email\" [width]=\"200\"></kendo-grid-column>\n  </kendo-grid>\n</div>\n"
 
 /***/ }),
 
@@ -285,7 +285,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ContactComponent = /** @class */ (function () {
     function ContactComponent(http) {
         this.http = http;
-        this.displayedColumns = ['name', 'city', 'email'];
     }
     ContactComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -329,7 +328,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/create-contact/create-contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <h1>Add New Contact</h1>\n  <div class=\"row\">\n    <div class=\"col-md-6\">\n      <form (ngSubmit)=\"saveContact()\" #contactForm=\"ngForm\">\n        <div class=\"form-group\">\n          <label>Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.name\" name=\"name\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Address</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.address\" name=\"address\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >City</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.city\" name=\"city\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Phone</label>\n          <input type=\"phone\" class=\"form-control\" [(ngModel)]=\"contact.phone\" name=\"phone\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Email</label>\n          <input type=\"email\" class=\"form-control\" [(ngModel)]=\"contact.email\" name=\"email\" required>\n        </div>\n        <div class=\"form-group\">\n          <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!contactForm.form.valid\">Save</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <h1>Add New Contact</h1>\n  <div class=\"row\">\n    <div class=\"col-md-6\">\n      <form (ngSubmit)=\"saveContact()\" #contactForm=\"ngForm\">\n        <div class=\"form-group\">\n          <label>Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.name\" name=\"name\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Address</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.address\" name=\"address\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >City</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"contact.city\" name=\"city\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Phone</label>\n          <input type=\"phone\" class=\"form-control\" [(ngModel)]=\"contact.phone\" name=\"phone\" required>\n        </div>\n        <div class=\"form-group\">\n          <label >Email</label>\n          <input type=\"email\" class=\"form-control\" [(ngModel)]=\"contact.email\" name=\"email\" required>\n        </div>\n        <div class=\"form-group\">\n          <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!contactForm.form.valid\">Save</button>\n          <button class=\"btn btn-primary\" [routerLink]=\"['/contacts']\">Home</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -366,8 +365,6 @@ var CreateContactComponent = /** @class */ (function () {
             email: ""
         };
     }
-    CreateContactComponent.prototype.ngOnInit = function () {
-    };
     CreateContactComponent.prototype.saveContact = function () {
         var _this = this;
         this.http.post('/contacts', this.contact)

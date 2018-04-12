@@ -8,7 +8,7 @@ import {Contact} from "../contact/contact.component";
   templateUrl: './create-contact.component.html',
   styleUrls: ['./create-contact.component.css']
 })
-export class CreateContactComponent implements OnInit {
+export class CreateContactComponent {
 
   contact: Contact = {
     id: "",
@@ -19,9 +19,6 @@ export class CreateContactComponent implements OnInit {
     email: ""
   };
   constructor(private http: HttpClient, private router: Router) { }
-
-  ngOnInit() {
-  }
 
   saveContact() {
     this.http.post('/contacts', this.contact)

@@ -11,6 +11,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GridModule} from "@progress/kendo-angular-grid";
 import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 import { CreateContactComponent } from './create-contact/create-contact.component';
+import {ContactDetailModule} from "./contact-detail/contact-detail.module";
+import {CreateContactModule} from "./create-contact/create-contact.module";
+import {ContactModule} from "./contact/contact.module";
 
 const appRoutes: Routes = [
   {
