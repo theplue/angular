@@ -14,6 +14,7 @@ import { CreateContactComponent } from './create-contact/create-contact.componen
 import {ContactDetailModule} from "./contact-detail/contact-detail.module";
 import {CreateContactModule} from "./create-contact/create-contact.module";
 import {ContactModule} from "./contact/contact.module";
+import {StoreModule} from "../store/store.module";
 
 const appRoutes: Routes = [
   {
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    StoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

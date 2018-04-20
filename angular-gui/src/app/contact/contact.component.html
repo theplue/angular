@@ -4,7 +4,7 @@
     <span class="k-icon k-i-plus"></span>
     Add new contact
   </button>
-  <kendo-grid [data]="contacts">
+  <kendo-grid [data]="contacts$ | async">
     <kendo-grid-column field="name" title="Name" [width]="200">
       <ng-template kendoGridCellTemplate let-dataItem>
         <a [routerLink]="['/contact-detail', dataItem.id]">{{dataItem.name}}</a>
